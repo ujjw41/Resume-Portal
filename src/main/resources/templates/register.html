@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang = "en" xmlns = "http://www.w3.org/1999/xhtml" xmlns:th = "http://www.thymeleaf.org">
+<head>
+	<meta charset = "UTF-8">
+	<title>Registration</title>
+	<link rel = "stylesheet" href = "/styles/style.css">
+
+</head>
+<body>
+<header>
+	<h1 th:text = "${applicationName}"></h1>
+	<form method = "post" action = "/submit">
+		<label for = "name"><b>Name</b></label><br>
+		<input type = "text" placeholder = "Enter Name" name = "name" id = "name"><br>
+		<label for = "mobile"><b>Mobile</b></label><br>
+		<input type = "number" placeholder = "Enter mobile" name = "mobile" id = "mobile"><br>
+		<label for = "password"><b>Password</b></label><br>
+		<input type = "password" placeholder = "Enter password" name = "password" id = "password"><br>
+		<!--		<label for = "confirm-password"><b>Confirm password</b></label><br>-->
+		<!--		<input type = "password" placeholder = "Confirm password" name = "confirm-password" id = "confirm-password" required><br>-->
+		<label for = "email"><b>Email</b></label><br>
+		<input type = "text" placeholder = "Enter Email" name = "email" id = "email"><br>
+		<button type = "submit" class = "btn btn-primary btn-block">Register</button>
+	</form>
+	<ul th:each = "data : ${errorMessage} != null ? ${errorMessage.getAllErrors()} : ${empty}">
+		<li th:text = "${data.getDefaultMessage()}"></li>
+	</ul>
+</header>
+<br>
+<div>
+	<br>
+	<a href = "/login">
+		Already a user? login here
+	</a>
+	<br>
+</div>
+
+</body>
+</html>

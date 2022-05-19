@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang = "en" xmlns = "http://www.w3.org/1999/xhtml" xmlns:th = "http://www.thymeleaf.org">
+<head>
+	<meta charset = "UTF-8">
+	<title>Users List</title>
+	<link rel = "stylesheet" href = "/styles/style.css">
+
+</head>
+<body>
+<div>
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Mobile</th>
+			<th>E-mail</th>
+			<th>Link to Resume</th>
+		</tr>
+		<tr th:each = "user : ${users}">
+			<td th:text = "${user.id}"></td>
+			<td th:text = "${user.name}"></td>
+			<td th:text = "${user.mobile}"></td>
+			<td th:text = "${user.email}"></td>
+			<td th:text = "${user.resume_link}"></td>
+		</tr>
+
+	</table>
+</div>
+
+</body>
+</html>

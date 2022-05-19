@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang = "en" xmlns = "http://www.w3.org/1999/xhtml" xmlns:th = "http://www.thymeleaf.org">
+<head>
+	<meta charset = "UTF-8">
+	<title>Upload Resume</title>
+	<link rel = "stylesheet" href = "/styles/style.css">
+
+</head>
+<body>
+<h1 th:text = "${applicationName}"></h1>
+<div>
+	<form method = "post" action = "/save" enctype = "multipart/form-data">
+
+		<label for = "resume"> <b>Upload resume</b></label><br>
+
+		<input type = "file" name = "myresume" id = "resume" required><br>
+
+		<button type = "submit" class = "btn btn-primary btn-block">Save</button>
+
+	</form>
+</div>
+
+<br>
+<div>
+	<br>
+	<a href = "/logout">
+		<button>logout</button>
+	</a>
+	<br>
+</div>
+</body>
+</html>

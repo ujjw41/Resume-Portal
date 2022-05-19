@@ -1,0 +1,39 @@
+body {
+	background-color: aliceblue;
+	margin: 15px auto;
+	width: 960px;
+	text-align: center;
+}
+p {
+	margin: 20px 0 20px 0;
+}
+header {
+	width: 100%;
+}
+footer {
+	width: 100%;
+	font-style: italic;
+	font-size: small;
+	color: darkslateblue;
+}
+h3 {
+	color: cornflowerblue;
+}
+h1 {
+	color: cadetblue;
+}
+label {
+	width: 50px;
+}
+table {
+	border: 1px solid;
+	margin-left: auto;
+	margin-right: auto;
+}
+tr,
+th,
+td {
+	border: 1px solid;
+	width: 60px;
+	height: 20px;
+}

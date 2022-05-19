@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang = "en" xmlns = "http://www.w3.org/1999/xhtml" xmlns:th = "http://www.thymeleaf.org">
+<head>
+	<meta charset = "UTF-8">
+	<title>Log-In</title>
+	<link rel = "stylesheet" href = "/styles/style.css">
+
+</head>
+<body>
+<h1>login here</h1>
+<form method = "post" action = "/verify">
+	<label for = "email"><b>Email</b></label><br>
+	<input type = "text" placeholder = "Enter Email" name = "email" id = "email"><br>
+	<label for = "password"><b>Password</b></label><br>
+	<input type = "password" placeholder = "Enter password" name = "password" id = "password"><br>
+	<button type = "submit" class = "btn btn-primary btn-block">Log in</button>
+</form>
+<!--<ul th:each = "data : ${errorMessage} != null ? ${errorMessage.getAllErrors()} : ${empty}">-->
+<!--	<li th:text = "${data.getDefaultMessage()}"></li>-->
+<!--</ul>-->
+<br>
+<div>
+	<br>
+	<a href = "/register">
+		Not a user? register here
+	</a>
+	<br>
+</div>
+
+</body>
+</html>
