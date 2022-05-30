@@ -7,17 +7,17 @@
 
 </head>
 <body>
-<h1>login here</h1>
-<form method = "post" action = "/verifyuser">
-	<label for = "email"><b>Email</b></label><br>
-	<input type = "text" placeholder = "Enter Email" name = "email" id = "email"><br>
-	<label for = "password"><b>Password</b></label><br>
-	<input type = "password" placeholder = "Enter password" name = "password" id = "password"><br>
-	<button type = "submit" class = "btn btn-primary btn-block">Log in</button>
+<h1>Login</h1>
+
+<form action = "/login" method = "post">
+	<label for = "username">username: </label>
+	<input id = "username" name = "username" type = "text" aria-placeholder = "username"><br>
+
+	<label for = "password">password: </label>
+	<input id = "password" name = "password" type = "password" aria-placeholder = "password"><br>
+
+	<button type = "submit">Login</button>
 </form>
-<!--<ul th:each = "data : ${errorMessage} != null ? ${errorMessage.getAllErrors()} : ${empty}">-->
-<!--	<li th:text = "${data.getDefaultMessage()}"></li>-->
-<!--</ul>-->
 <br>
 <div>
 	<br>

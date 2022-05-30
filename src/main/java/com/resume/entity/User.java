@@ -19,7 +19,8 @@ public class User {
 	Long id;
 
 	@NotBlank(message = "Name is required")
-	String name;
+	@Column(unique = true)
+	String username;
 
 	@Size(min = 4, max = 15, message = "mobile must have more than 3 and less than 15 digits")
 	String mobile;
@@ -33,4 +34,10 @@ public class User {
 	String email;
 
 	String resume_link;
+
+	@Column(columnDefinition = "varchar(255) default 'USER'")
+	String role = "USER";
+
+	@Column(columnDefinition = "boolean default true")
+	Boolean enabled = true;
 }

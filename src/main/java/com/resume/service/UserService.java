@@ -3,6 +3,7 @@ package com.resume.service;
 import com.resume.entity.User;
 import com.resume.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -28,15 +29,20 @@ public class UserService {
 			return "user not registered";
 		}
 		if (users.get(0).getPassword().equals(password)) {
+
 			httpSession.setAttribute("userLoggedIn", "yes");
 			httpSession.setAttribute("user", users.get(0));
-			httpSession.setAttribute("userName", users.get(0).getName());
+			httpSession.setAttribute("userName", users.get(0).getUsername());
 			httpSession.setAttribute("userMobile", users.get(0).getMobile());
 			httpSession.setAttribute("userEmail", users.get(0).getEmail());
 			return "success";
 		} else {
 			return "invalid password";
 		}
+	}
+
+	public User getUser(String username) {
+		return userRepo.getByUsername(username);
 	}
 
 

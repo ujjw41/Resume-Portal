@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -17,14 +18,15 @@ public class AdminController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping("/users")
-	public String showUsers(Model model) {
+	@GetMapping("/admin/users")
+	public String showUsers(Model model, Principal principal) {
+		if (principal.getName().equals("admin")) {
+			List<User> users = userService.findAllUsers();
+			model.addAttribute("errorMessage", null);
+			model.addAttribute("users", users);
+			return "users";
+		}
 
-		List<User> users = userService.findAllUsers();
-
-		model.addAttribute("errorMessage", null);
-		model.addAttribute("users", users);
-
-		return "users";
+		return "failure";
 	}
 }

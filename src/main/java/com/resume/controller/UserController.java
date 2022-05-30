@@ -4,6 +4,10 @@ import com.resume.entity.ErrorMessage;
 import com.resume.entity.User;
 import com.resume.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +46,6 @@ public class UserController {
 	public String submit(@Valid User user, BindingResult binding, Model model) {
 		if (binding.hasErrors()) {
 			List<ObjectError> allErrors = binding.getAllErrors();
-
 			String errorMessage = null;
 
 			for (ObjectError firstError : allErrors) {
@@ -51,48 +55,44 @@ public class UserController {
 
 			return "redirect:/register?errorMessage=" + errorMessage;
 		}
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userService.saveUser(user);
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	@GetMapping("/login")
-	public String login(HttpSession httpSession) {
-		//Logged-in user cannot log in again
-		if (httpSession.getAttribute("userLoggedIn") != null && httpSession.getAttribute("userLoggedIn").equals("yes")) {
-			return "redirect:/upload";
+	public String login() {
+		if (isAuthenticated()){
+			return "redirect:/";
 		}
 		return "login";
 	}
 
-	@PostMapping("/verifyuser")
-	public String verifyUser(Model model, @RequestParam("email") String email, @RequestParam("password") String password, HttpSession httpSession) {
-
-		String response = userService.verifyUser(email, password, httpSession);
-
-		if (response.equals("success")) {
-			return "redirect:/upload";
-		}
-
-		model.addAttribute("response", response);
-		return "login";
-
-	}
+//	@PostMapping("/verifyuser")
+//	public String verifyUser(Model model, @RequestParam("email") String email, @RequestParam("password") String password, HttpSession httpSession) {
+//
+//		String response = userService.verifyUser(email, password, httpSession);
+//
+//		if (response.equals("success")) {
+//			return "redirect:/upload";
+//		}
+//
+//		model.addAttribute("response", response);
+//		return "login";
+//
+//	}
 
 	@GetMapping("/upload")
 	public String upload(Model model, HttpSession httpSession) {
 		model.addAttribute("applicationName", "Resume upload portal");
-
-		//Only logged-in user can access upload page
-		if (httpSession.getAttribute("userLoggedIn") != null && httpSession.getAttribute("userLoggedIn").equals("yes")) {
-			return "/upload";
-		}
 		model.addAttribute("errorMessage", null);
 		model.addAttribute("empty", new ArrayList());
-		return "redirect:/register";
+		return "upload";
 	}
 
 	@PostMapping("/save")
-	public String save(@RequestParam("myresume") MultipartFile resume, HttpSession httpSession, User user) throws IOException {
+	public String save(@RequestParam("myresume") MultipartFile resume, User user, Principal principal) throws IOException {
 
 		String fileLocation = System.getProperty("user.dir") + "/src/main/resources/static/";
 		String fileName = resume.getOriginalFilename();
@@ -109,8 +109,8 @@ public class UserController {
 		while ((read = inputStream.read(bytes)) != -1) {
 			outputStream.write(bytes, 0, read);
 		}
-		//Get user from session and save the file location
-		user = (User) httpSession.getAttribute("user");
+
+		user = userService.getUser(principal.getName());
 		user.setResume_link("http://localhost:8080/" + fileName);
 		userService.saveUser(user);
 
@@ -122,11 +122,19 @@ public class UserController {
 		return "success";
 	}
 
-	@GetMapping("/logout")
-	public String logout(Model model, HttpSession httpSession) {
-		httpSession.invalidate();
-		model.addAttribute("applicationName", "Resume upload portal");
-		return "redirect:/";
+	private boolean isAuthenticated() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || AnonymousAuthenticationToken.class
+				.isAssignableFrom(authentication.getClass())) {
+			return false;
+		}
+		return authentication.isAuthenticated();
 	}
+//	@GetMapping("/logout")
+//	public String logout(Model model, HttpSession httpSession) {
+//		httpSession.invalidate();
+//		model.addAttribute("applicationName", "Resume upload portal");
+//		return "redirect:/";
+//	}
 
 }
