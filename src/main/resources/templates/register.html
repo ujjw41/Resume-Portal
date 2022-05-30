@@ -20,11 +20,12 @@
 		<!--		<input type = "password" placeholder = "Confirm password" name = "confirm-password" id = "confirm-password" required><br>-->
 		<label for = "email"><b>Email</b></label><br>
 		<input type = "text" placeholder = "Enter Email" name = "email" id = "email"><br>
-		<button type = "submit" class = "btn btn-primary btn-block">Register</button>
+		<br><button type = "submit" class = "btn btn-primary btn-block">Register</button>
 	</form>
-	<ul th:each = "data : ${errorMessage} != null ? ${errorMessage.getAllErrors()} : ${empty}">
-		<li th:text = "${data.getDefaultMessage()}"></li>
-	</ul>
+<!--	<ul th:each="err : ${error}">-->
+<!--		<li th:text="${err}"></li><br/>-->
+<!--	</ul>-->
+	<h5 style = "color:red" th:text = "${error}"></h5>
 </header>
 <br>
 <div>

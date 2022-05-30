@@ -2,6 +2,7 @@ package com.resume.controller;
 
 import com.resume.entity.User;
 import com.resume.service.UserService;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import java.util.List;
 
 @Controller
 public class AdminController {
+
+	//TODO add authentication for admin
 	@Autowired
 	UserService userService;
 
