@@ -36,7 +36,7 @@ public class User {
 	String resume_link;
 
 	@Column(columnDefinition = "varchar(255) default 'USER'")
-	String role = "USER";
+	String role = "ROLE_USER";
 
 	@Column(columnDefinition = "boolean default true")
 	Boolean enabled = true;
